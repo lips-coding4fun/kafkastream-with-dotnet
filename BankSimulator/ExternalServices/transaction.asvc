@@ -1,0 +1,25 @@
+{
+    "namespace": "BankSimulation",
+    "name": "Transaction",
+    "type": "record",
+    "fields": [
+        {
+            "name": "transactionID",
+            "type": "string",
+    "logicalType": "UUID"
+        },
+        {
+            "name": "cardNumber",
+            "type": "string",
+    "logicalType": "UUID"
+        },
+        {
+            "name": "code",
+            "type": "string"
+        },
+        {
+            "name": "amount",
+            "type": "float"
+        }
+    ]
+}

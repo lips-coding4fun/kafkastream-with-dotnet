@@ -1,0 +1,17 @@
+{
+    "namespace": "BankSimulation",
+    "name": "TransactionResult",
+    "type": "record",
+    "fields": [
+        {
+            "name": "transactionID",
+            "type": "string",
+    "logicalType": "UUID"
+        },
+{
+  "type": "boolean",
+  "name": "result"
+}
+	
+    ]
+}

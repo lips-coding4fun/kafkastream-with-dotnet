@@ -1,0 +1,29 @@
+{
+    "namespace": "BankSimulation",
+    "name": "CreditCard",
+    "type": "record",
+    "fields": [
+        {
+            "name": "transactionID",
+            "type": "string",
+    "logicalType": "UUID"
+        },
+        {
+            "name": "cardNumber",
+            "type": "string",
+    "logicalType": "UUID"
+        },
+        {
+            "name": "code",
+            "type": "string"
+        },
+        {
+            "name": "owner",
+            "type": "string"
+        },
+        {
+            "name": "initialMoney",
+            "type": "float"
+        }
+    ]
+}
