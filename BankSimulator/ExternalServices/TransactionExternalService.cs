@@ -58,7 +58,7 @@ namespace BankSimulator.ExternalServices
             var consumeTask = Task.Run(() =>
 {
 
-    consumer.Subscribe("bank.transaction");
+    consumer.Subscribe("bank_transaction");
 
     try
     {
@@ -101,7 +101,7 @@ namespace BankSimulator.ExternalServices
             };
 
             await producer
-                .ProduceAsync("bank.transaction", new Message<string, Transaction> { Key = transaction.cardNumber, Value = transaction })
+                .ProduceAsync("bank_transaction", new Message<string, Transaction> { Key = transaction.cardNumber, Value = transaction })
                 .ContinueWith(task =>
                     {
                         if (!task.IsFaulted)
@@ -122,7 +122,7 @@ namespace BankSimulator.ExternalServices
             };
 
             await producerResult
-                .ProduceAsync("bank.transaction.result", new Message<string, TransactionResult> { Key = transactionResult.transactionID, Value = transactionResult })
+                .ProduceAsync("bank_transaction_result", new Message<string, TransactionResult> { Key = transactionResult.transactionID, Value = transactionResult })
                 .ContinueWith(task =>
                     {
                         if (!task.IsFaulted)
@@ -143,7 +143,7 @@ namespace BankSimulator.ExternalServices
             };
 
             await producerResult
-                .ProduceAsync("bank.transaction.result", new Message<string, TransactionResult> { Key = transactionResult.transactionID, Value = transactionResult })
+                .ProduceAsync("bank_transaction_result", new Message<string, TransactionResult> { Key = transactionResult.transactionID, Value = transactionResult })
                 .ContinueWith(task =>
                     {
                         if (!task.IsFaulted)

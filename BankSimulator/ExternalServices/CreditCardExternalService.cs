@@ -58,7 +58,7 @@ namespace BankSimulator.ExternalServices
             };
 
             await producer
-                .ProduceAsync("bank.creditcard", new Message<string, BankSimulation.CreditCard> { Key = creditCard.CardNumber.ToString(), Value = creditCardEvent })
+                .ProduceAsync("bank_creditcard", new Message<string, BankSimulation.CreditCard> { Key = creditCard.CardNumber.ToString(), Value = creditCardEvent })
                 .ContinueWith(task =>
                     {
                         if (!task.IsFaulted)
