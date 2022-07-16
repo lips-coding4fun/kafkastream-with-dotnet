@@ -2,22 +2,25 @@ using BankSimulator.Store;
 using Confluent.Kafka;
 using Confluent.SchemaRegistry;
 using Confluent.SchemaRegistry.Serdes;
+using Microsoft.Extensions.Logging;
 
 namespace BankSimulator.ExternalServices
 {
     public class CreditCardExternalService : ICreditCardExternalService
     {
-        private readonly IProducer<string, CreditCard> producer;
+        private readonly IProducer<string, BankSimulation.CreditCard> producer;
         private Configuration configuration;
+        private readonly ILogger<CreditCardExternalService> logger;
 
-        public CreditCardExternalService(Configuration configuration)
+        public CreditCardExternalService(ILogger<CreditCardExternalService> logger, Configuration configuration)
         {
+            this.logger = logger;
             this.configuration = configuration;
 
             var consumerConfig = new ConsumerConfig
             {
                 BootstrapServers = configuration.BoostrapServers,
-                Debug =  configuration.KafkaDebug,
+                Debug = configuration.KafkaDebug,
                 GroupId = configuration.KafkaGroupId,
             };
 
@@ -39,8 +42,8 @@ namespace BankSimulator.ExternalServices
 
             var schemaRegistry = new CachedSchemaRegistryClient(schemaRegistryConfig);
             producer =
-                new ProducerBuilder<string, CreditCard>(producerConfig)
-                    .SetValueSerializer(new AvroSerializer<CreditCard>(schemaRegistry, avroSerializerConfig))
+                new ProducerBuilder<string, BankSimulation.CreditCard>(producerConfig)
+                    .SetValueSerializer(new AvroSerializer<BankSimulation.CreditCard>(schemaRegistry, avroSerializerConfig))
                     .Build();
         }
 
@@ -55,15 +58,15 @@ namespace BankSimulator.ExternalServices
             };
 
             await producer
-                .ProduceAsync("bank.creditcard", new Message<string, CreditCard> { Key = creditCard.CardNumber.ToString(), Value = creditCard })
+                .ProduceAsync("bank.creditcard", new Message<string, BankSimulation.CreditCard> { Key = creditCard.CardNumber.ToString(), Value = creditCardEvent })
                 .ContinueWith(task =>
                     {
                         if (!task.IsFaulted)
                         {
-                            Console.WriteLine($"produced to: {task.Result.TopicPartitionOffset}");
+                            logger.LogDebug($"produced to: {task.Result.TopicPartitionOffset}");
                             return;
                         }
-                        Console.WriteLine($"error producing message: {task?.Exception?.InnerException}");
+                        logger.LogError($"error producing message: {task?.Exception?.InnerException}");
                     });
         }
     }

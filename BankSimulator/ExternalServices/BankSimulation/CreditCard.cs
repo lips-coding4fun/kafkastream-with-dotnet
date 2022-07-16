@@ -15,8 +15,9 @@ namespace BankSimulation
 	
 	public partial class CreditCard : ISpecificRecord
 	{
-		public static Schema _SCHEMA = Avro.Schema.Parse(@"{""type"":""record"",""name"":""CreditCard"",""namespace"":""BankSimulation"",""fields"":[{""name"":""transactionID"",""type"":""string""},{""name"":""cardNumber"",""type"":""string""},{""name"":""code"",""type"":""string""},{""name"":""owner"",""type"":""string""},{""name"":""initialMoney"",""type"":""float""}]}");
-		private string _transactionID;
+		public static Schema _SCHEMA = Avro.Schema.Parse("{\"type\":\"record\",\"name\":\"CreditCard\",\"namespace\":\"BankSimulation\",\"fields\":[{\"nam" +
+				"e\":\"cardNumber\",\"type\":\"string\"},{\"name\":\"code\",\"type\":\"string\"},{\"name\":\"owner\"" +
+				",\"type\":\"string\"},{\"name\":\"initialMoney\",\"type\":\"float\"}]}");
 		private string _cardNumber;
 		private string _code;
 		private string _owner;
@@ -26,17 +27,6 @@ namespace BankSimulation
 			get
 			{
 				return CreditCard._SCHEMA;
-			}
-		}
-		public string transactionID
-		{
-			get
-			{
-				return this._transactionID;
-			}
-			set
-			{
-				this._transactionID = value;
 			}
 		}
 		public string cardNumber
@@ -87,11 +77,10 @@ namespace BankSimulation
 		{
 			switch (fieldPos)
 			{
-			case 0: return this.transactionID;
-			case 1: return this.cardNumber;
-			case 2: return this.code;
-			case 3: return this.owner;
-			case 4: return this.initialMoney;
+			case 0: return this.cardNumber;
+			case 1: return this.code;
+			case 2: return this.owner;
+			case 3: return this.initialMoney;
 			default: throw new AvroRuntimeException("Bad index " + fieldPos + " in Get()");
 			};
 		}
@@ -99,11 +88,10 @@ namespace BankSimulation
 		{
 			switch (fieldPos)
 			{
-			case 0: this.transactionID = (System.String)fieldValue; break;
-			case 1: this.cardNumber = (System.String)fieldValue; break;
-			case 2: this.code = (System.String)fieldValue; break;
-			case 3: this.owner = (System.String)fieldValue; break;
-			case 4: this.initialMoney = (System.Single)fieldValue; break;
+			case 0: this.cardNumber = (System.String)fieldValue; break;
+			case 1: this.code = (System.String)fieldValue; break;
+			case 2: this.owner = (System.String)fieldValue; break;
+			case 3: this.initialMoney = (System.Single)fieldValue; break;
 			default: throw new AvroRuntimeException("Bad index " + fieldPos + " in Put()");
 			};
 		}
